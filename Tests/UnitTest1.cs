@@ -36,6 +36,7 @@ namespace Tests
             Assert.False(projectsViewModel.IsBusy);
             Assert.False(projectsViewModel.HasError);
             Assert.True(projectsViewModel.Projects.Any());
+            Assert.True(projectsViewModel.SelectedIndex == 0);
         }
 
         [Test]

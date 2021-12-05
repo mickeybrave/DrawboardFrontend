@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Frontend"
         mc:Ignorable="d"
         Title="MainWindow"
+        WindowState="Maximized"
         Height="450"
         Width="800">
     <ContentControl.Resources>
@@ -13,6 +14,40 @@
                                          TrueValue="Visible"
                                          FalseValue="Collapsed" />
         <DataTemplate x:Key="ProjectsDataTemplete">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Project name" />
+                <TextBlock Text="{Binding Name}"
+                           Grid.Column="2" />
+            </Grid>
+        </DataTemplate>
+    </ContentControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <HeaderedContentControl>
+            <HeaderedContentControl.Header>
+                <TextBlock  Text="Projects"
+                            FontWeight="Bold" />
+            </HeaderedContentControl.Header>
+            <ListBox ItemsSource="{Binding Projects}"
+                     SelectedItem="{Binding SelectedProject, Mode=TwoWay}"
+                     SelectedIndex="{Binding SelectedIndex}"
+                     ItemTemplate="{StaticResource ProjectsDataTemplete}" />
+        </HeaderedContentControl>
+        <HeaderedContentControl Grid.Column="2"
+                                DataContext="{Binding SelectedProject}">
+            <HeaderedContentControl.Header>
+                <TextBlock Text="Project details"
+                           FontWeight="Bold" />
+            </HeaderedContentControl.Header>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -29,33 +64,59 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="5" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Text="Project name" />
-                <TextBlock Text="{Binding Name}"
-                           Grid.Column="2" />
-                <TextBlock Text="Description"
-                           Grid.Row="2" />
+                <TextBlock Text="Description" />
                 <TextBlock Text="{Binding Description}"
-                           Grid.Column="2"
-                           Grid.Row="2" />
+                           Grid.Column="2" />
                 <TextBlock Text="Creation date"
-                           Grid.Row="4" />
+                           Grid.Row="2" />
                 <TextBlock Text="{Binding CreatedDateUtc}"
                            Grid.Column="2"
+                           Grid.Row="2" />
+                <TextBlock Text="Status"
                            Grid.Row="4" />
+                <TextBlock Text="{Binding Status}"
+                           Grid.Column="2"
+                           Grid.Row="4" />
+                <TextBlock Text="Permissions"
+                           Grid.Row="6" />
+                <TextBlock Text="{Binding Permissions}"
+                           Grid.Column="2"
+                           Grid.Row="6" />
+                <TextBlock Text="DrawingCount"
+                           Grid.Row="8" />
+                <TextBlock Text="{Binding DrawingCount}"
+                           Grid.Column="2"
+                           Grid.Row="8" />
+                <TextBlock Text="DocumentCount"
+                           Grid.Row="10" />
+                <TextBlock Text="{Binding DocumentCount}"
+                           Grid.Column="2"
+                           Grid.Row="10" />
+                <TextBlock Text="IssuesCount"
+                           Grid.Row="12" />
+                <TextBlock Text="{Binding IssuesCount}"
+                           Grid.Column="2"
+                           Grid.Row="12" />
             </Grid>
-        </DataTemplate>
-    </ContentControl.Resources>
-    <Grid>
-        <ListBox ItemsSource="{Binding Projects}"
-                 ItemTemplate="{StaticResource ProjectsDataTemplete}" />
+        </HeaderedContentControl>
         <Border Visibility="{Binding IsBusy, Converter={StaticResource BoolToHiddenConverter}}"
+                Grid.ColumnSpan="3"
                 Background="#3F000000">
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center">Loading . . .</TextBlock>
         </Border>
         <Border Visibility="{Binding HasError, Converter={StaticResource BoolToHiddenConverter}}"
-                Background="#3F000000">
+                Background="#3F000000"
+                Grid.ColumnSpan="3">
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Text="{Binding ErrorText}"></TextBlock>
